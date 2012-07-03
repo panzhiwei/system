@@ -33,7 +33,7 @@ public class AccountManager {
 	private static Logger logger = LoggerFactory.getLogger(AccountManager.class);
 
 	private BaseDao<User> userDao;
-	private GroupDao groupDao;
+	private BaseDao<Group> groupDao;
 	private ShiroDbRealm shiroRealm;
 
 	//-- User Manager --//
@@ -103,7 +103,7 @@ public class AccountManager {
 	}
 
 	@Autowired
-	public void setGroupDao(GroupDao groupDao) {
+	public void setGroupDao(BaseDao<Group> groupDao) {
 		this.groupDao = groupDao;
 	}
 
