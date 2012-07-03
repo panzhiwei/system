@@ -15,6 +15,7 @@ import org.springside.examples.miniweb.dao.account.BaseDao;
 import org.springside.examples.miniweb.dao.account.GroupDao;
 import org.springside.examples.miniweb.dao.account.UserDao;
 import org.springside.examples.miniweb.entity.account.Group;
+import org.springside.examples.miniweb.entity.account.QGroup;
 import org.springside.examples.miniweb.entity.account.QUser;
 import org.springside.examples.miniweb.entity.account.User;
 import org.springside.examples.miniweb.service.ServiceException;
@@ -93,7 +94,14 @@ public class AccountManager {
 
 	@Transactional(readOnly = false)
 	public void deleteGroup(String id) {
-		groupDao.delete(id);
+	
+		QUser user=QUser.user;
+		Group g=groupDao.findOne(id);
+		Iterable<User> users=userDao.findAll(user.groupList.contains(g));
+		for(User u:users){
+			u.getGroupList().remove(g);
+		}
+		groupDao.delete(g);
 		shiroRealm.clearAllCachedAuthorizationInfo();
 	}
 
