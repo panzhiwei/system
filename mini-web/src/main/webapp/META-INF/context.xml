@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<Context docBase="test" path="/test" workDir="work/Catalina/localhost/test">
+  <ResourceLink global="jdbc/mysql" name="jdbc/mysql" type="javax.sql.DataSource" />
+</Context>
