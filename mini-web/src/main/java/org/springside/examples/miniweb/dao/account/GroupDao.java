@@ -1,6 +1,5 @@
 package org.springside.examples.miniweb.dao.account;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springside.examples.miniweb.entity.account.Group;
 
 /**
@@ -9,5 +8,5 @@ import org.springside.examples.miniweb.entity.account.Group;
  * @author calvin
  */
 
-public interface GroupDao extends PagingAndSortingRepository<Group, String>, GroupDaoCustom {
+public interface GroupDao extends BaseDao<Group> {
 }

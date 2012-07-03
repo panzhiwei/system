@@ -11,9 +11,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springside.examples.miniweb.dao.account.BaseDao;
 import org.springside.examples.miniweb.dao.account.GroupDao;
 import org.springside.examples.miniweb.dao.account.UserDao;
 import org.springside.examples.miniweb.entity.account.Group;
+import org.springside.examples.miniweb.entity.account.QUser;
 import org.springside.examples.miniweb.entity.account.User;
 import org.springside.examples.miniweb.service.ServiceException;
 
@@ -30,7 +32,7 @@ public class AccountManager {
 
 	private static Logger logger = LoggerFactory.getLogger(AccountManager.class);
 
-	private UserDao userDao;
+	private BaseDao<User> userDao;
 	private GroupDao groupDao;
 	private ShiroDbRealm shiroRealm;
 
@@ -69,7 +71,9 @@ public class AccountManager {
 	}
 
 	public User findUserByLoginName(String loginName) {
-		return userDao.findByLoginName(loginName);
+		//return userDao.findByLoginName(loginName);
+		QUser user=QUser.user;
+		return userDao.findOne(user.loginName.eq(loginName));
 	}
 
 	//-- Group Manager --//
@@ -94,7 +98,7 @@ public class AccountManager {
 	}
 
 	@Autowired
-	public void setUserDao(UserDao userDao) {
+	public void setUserDao(BaseDao<User> userDao) {
 		this.userDao = userDao;
 	}
 
