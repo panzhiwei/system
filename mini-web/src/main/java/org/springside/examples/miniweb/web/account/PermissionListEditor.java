@@ -1,13 +1,12 @@
 package org.springside.examples.miniweb.web.account;
 
 import java.beans.PropertyEditorSupport;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springside.examples.miniweb.entity.account.Role;
+import org.springside.examples.miniweb.entity.account.Permission;
 import org.springside.examples.miniweb.service.account.AccountManager;
 import org.springside.modules.utils.Collections3;
 
@@ -19,7 +18,7 @@ import com.google.common.collect.Sets;
  * @author calvin
  */
 @Component
-public class GroupListEditor extends PropertyEditorSupport {
+public class PermissionListEditor extends PropertyEditorSupport {
 
 	@Autowired
 	private AccountManager accountManager;
@@ -30,12 +29,12 @@ public class GroupListEditor extends PropertyEditorSupport {
 	@Override
 	public void setAsText(String text) throws IllegalArgumentException {
 		String[] ids = StringUtils.split(text, ",");
-		Set<Role> groups = Sets.newHashSet();
+		Set<Permission> permissions = Sets.newHashSet();
 		for (String id : ids) {
-			Role group = accountManager.getGroup(String.valueOf(id));
-			groups.add(group);
+			Permission permission = accountManager.getPermisson(String.valueOf(id));
+			permissions.add(permission);
 		}
-		setValue(groups);
+		setValue(permissions);
 	}
 
 	/**
@@ -43,6 +42,6 @@ public class GroupListEditor extends PropertyEditorSupport {
 	 */
 	@Override
 	public String getAsText() {
-		return Collections3.extractToString((Set<Role>) getValue(), "id", ",");
+		return Collections3.extractToString((Set<Permission>) getValue(), "id", ",");
 	}
 }

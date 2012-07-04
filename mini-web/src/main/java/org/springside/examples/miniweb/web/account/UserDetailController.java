@@ -1,6 +1,6 @@
 package org.springside.examples.miniweb.web.account;
 
-import java.util.List;
+import java.util.Set;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class UserDetailController {
 
 	@InitBinder
 	public void initBinder(WebDataBinder b) {
-		b.registerCustomEditor(List.class, "groupList", groupListEditor);
+		b.registerCustomEditor(Set.class, "roles", groupListEditor);
 	}
 
 	@RequiresPermissions("user:edit")

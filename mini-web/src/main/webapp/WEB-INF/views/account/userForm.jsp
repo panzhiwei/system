@@ -54,7 +54,7 @@
 			</div>
 			<div>
 				<label for="name" class="field">用户名:</label>
-				<input type="text" id="name" name="name" size="40" value="${user.name}" class="required"/>
+				<input type="text" id="name" name="realName" size="40" value="${user.realName}" class="required"/>
 			</div>
 			<div>
 				<label for="password" class="field">密码:</label>
@@ -70,7 +70,7 @@
 			</div>
 			<div>
 				<label for="groupList" class="field">权限组:</label>
-				<form:checkboxes path="groupList" items="${allGroups}" itemLabel="name" itemValue="id" />
+				<form:checkboxes path="roles" items="${allGroups}" itemLabel="name" itemValue="id" />
 			</div>	
 		</fieldset>
 		<div>

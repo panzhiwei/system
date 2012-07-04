@@ -12,11 +12,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.examples.miniweb.dao.account.BaseDao;
-import org.springside.examples.miniweb.dao.account.GroupDao;
-import org.springside.examples.miniweb.dao.account.UserDao;
-import org.springside.examples.miniweb.entity.account.Group;
-import org.springside.examples.miniweb.entity.account.QGroup;
+import org.springside.examples.miniweb.entity.account.Permission;
 import org.springside.examples.miniweb.entity.account.QUser;
+import org.springside.examples.miniweb.entity.account.Role;
 import org.springside.examples.miniweb.entity.account.User;
 import org.springside.examples.miniweb.service.ServiceException;
 
@@ -25,19 +23,20 @@ import org.springside.examples.miniweb.service.ServiceException;
  * 
  * @author calvin
  */
-//Spring Bean的标识.
+// Spring Bean的标识.
 @Component
-//默认将类中的所有public函数纳入事务管理.
+// 默认将类中的所有public函数纳入事务管理.
 @Transactional(readOnly = true)
 public class AccountManager {
 
 	private static Logger logger = LoggerFactory.getLogger(AccountManager.class);
 
 	private BaseDao<User> userDao;
-	private BaseDao<Group> groupDao;
+	private BaseDao<Role> roleDao;
+	private BaseDao<Permission> permissionDao;
 	private ShiroDbRealm shiroRealm;
 
-	//-- User Manager --//
+	// -- User Manager --//
 	public User getUser(String id) {
 		return userDao.findOne(id);
 	}
@@ -64,7 +63,7 @@ public class AccountManager {
 	 * 判断是否超级管理员.
 	 */
 	private boolean isSupervisor(String id) {
-		return StringUtils.equals(id,"1");
+		return StringUtils.equals(id, "1");
 	}
 
 	public List<User> getAllUser() {
@@ -72,36 +71,36 @@ public class AccountManager {
 	}
 
 	public User findUserByLoginName(String loginName) {
-		//return userDao.findByLoginName(loginName);
-		QUser user=QUser.user;
+		// return userDao.findByLoginName(loginName);
+		QUser user = QUser.user;
 		return userDao.findOne(user.loginName.eq(loginName));
 	}
 
-	//-- Group Manager --//
-	public Group getGroup(String id) {
-		return groupDao.findOne(id);
+	// -- Group Manager --//
+	public Role getGroup(String id) {
+		return roleDao.findOne(id);
 	}
 
-	public List<Group> getAllGroup() {
-		return (List<Group>) groupDao.findAll((new Sort(Direction.ASC, "id")));
+	public List<Role> getAllGroup() {
+		return (List<Role>) roleDao.findAll((new Sort(Direction.ASC, "id")));
 	}
 
 	@Transactional(readOnly = false)
-	public void saveGroup(Group entity) {
-		groupDao.save(entity);
+	public void saveGroup(Role entity) {
+		roleDao.save(entity);
 		shiroRealm.clearAllCachedAuthorizationInfo();
 	}
 
 	@Transactional(readOnly = false)
 	public void deleteGroup(String id) {
-	
-		QUser user=QUser.user;
-		Group g=groupDao.findOne(id);
-		Iterable<User> users=userDao.findAll(user.groupList.contains(g));
-		for(User u:users){
-			u.getGroupList().remove(g);
+
+		QUser user = QUser.user;
+		Role g = roleDao.findOne(id);
+		Iterable<User> users = userDao.findAll(user.roles.contains(g));
+		for (User u : users) {
+			u.getRoles().remove(g);
 		}
-		groupDao.delete(g);
+		roleDao.delete(g);
 		shiroRealm.clearAllCachedAuthorizationInfo();
 	}
 
@@ -111,12 +110,25 @@ public class AccountManager {
 	}
 
 	@Autowired
-	public void setGroupDao(BaseDao<Group> groupDao) {
-		this.groupDao = groupDao;
+	public void setRoleDao(BaseDao<Role> roleDao) {
+		this.roleDao = roleDao;
 	}
 
 	@Autowired(required = false)
 	public void setShiroRealm(ShiroDbRealm shiroRealm) {
 		this.shiroRealm = shiroRealm;
+	}
+
+	public List<Permission> getAllPermissions() {
+		return permissionDao.findAll();
+	}
+
+	@Autowired
+	public void setPermissionDao(BaseDao<Permission> permissionDao) {
+		this.permissionDao = permissionDao;
+	}
+
+	public Permission getPermisson(String id) {
+		return permissionDao.findOne(id);
 	}
 }

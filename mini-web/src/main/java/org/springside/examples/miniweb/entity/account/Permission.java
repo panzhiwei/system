@@ -1,45 +1,63 @@
 package org.springside.examples.miniweb.entity.account;
 
-import java.util.Map;
+import java.util.Set;
 
-import com.google.common.collect.Maps;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springside.examples.miniweb.entity.IdEntity;
+
+import com.google.common.collect.Sets;
 
 /**
  * Resource Base Access Control中的资源定义.
  * 
- * @author calvin
+ * @author pzw
  */
-public enum Permission {
 
-	USER_VIEW("user:view", "查看用戶"), USER_EDIT("user:edit", "修改用户"),
+@Entity
+@Table(name = "T_B_PERMISSION")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class Permission extends IdEntity {
 
-	GROUP_VIEW("group:view", "查看权限组"), GROUP_EDIT("group:edit", "修改权限组");
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String value;
+	private String name;
+	
+	private Set<Role> roles=Sets.newLinkedHashSet();
 
-	private static Map<String, Permission> valueMap = Maps.newHashMap();
-
-	public String value;
-	public String displayName;
-
-	static {
-		for (Permission permission : Permission.values()) {
-			valueMap.put(permission.value, permission);
-		}
-	}
-
-	Permission(String value, String displayName) {
-		this.value = value;
-		this.displayName = displayName;
-	}
-
-	public static Permission parse(String value) {
-		return valueMap.get(value);
-	}
-
+	@Column(nullable=false,unique=true,length=50, columnDefinition="VARCHAR(50)")
 	public String getValue() {
 		return value;
 	}
 
-	public String getDisplayName() {
-		return displayName;
+	public void setValue(String value) {
+		this.value = value;
 	}
+
+	@Column(nullable=false,length=100,columnDefinition="VARCHAR(100)")
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@ManyToMany(mappedBy="permissions")
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
 }

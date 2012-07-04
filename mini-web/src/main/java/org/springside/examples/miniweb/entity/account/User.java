@@ -1,8 +1,9 @@
 package org.springside.examples.miniweb.entity.account;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -13,33 +14,36 @@ import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springside.examples.miniweb.entity.IdEntity;
 import org.springside.modules.utils.Collections3;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 /**
  * 用户.
  * 
- * 使用JPA annotation定义ORM关系.
- * 使用Hibernate annotation定义JPA未覆盖的部分.
- * 
- * @author calvin
+ * @author pzw
  */
 @Entity
-//表名与类名不相同时重新定义表名.
-@Table(name = "acct_user")
-//默认的缓存策略.
+@Table(name = "T_B_USER")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends IdEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;	
+	
 	private String loginName;
-	private String password;//为简化演示使用明文保存的密码
-	private String name;
+	private String password;
+	private String realName;
 	private String email;
-	private List<Group> groupList = Lists.newArrayList();//有序的关联对象集合
+	private boolean locked;
+	
+	private boolean passwordExpired;
+	
+
+	private Set<Role> roles =Sets.newLinkedHashSet();// 有序的关联对象集合
 
 	public String getLoginName() {
 		return loginName;
@@ -57,12 +61,12 @@ public class User extends IdEntity {
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
+	public String getRealName() {
+		return realName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
 	public String getEmail() {
@@ -73,30 +77,42 @@ public class User extends IdEntity {
 		this.email = email;
 	}
 
-	//多对多定义
-	@ManyToMany
-	@JoinTable(name = "acct_user_group", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "group_id") })
-	//Fecth策略定义
-	@Fetch(FetchMode.SUBSELECT)
-	//集合按id排序.
+	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "T_B_USER_ROLE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
 	@OrderBy("id")
-	//集合中对象id的缓存.
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	public List<Group> getGroupList() {
-		return groupList;
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
-	public void setGroupList(List<Group> groupList) {
-		this.groupList = groupList;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
+
+	public boolean isPasswordExpired() {
+		return passwordExpired;
+	}
+
+	public void setPasswordExpired(boolean passwordExpired) {
+		this.passwordExpired = passwordExpired;
 	}
 
 	/**
 	 * 用户拥有的权限组名称字符串, 多个权限组名称用','分隔.
 	 */
-	//非持久化属性.
+	// 非持久化属性.
 	@Transient
-	public String getGroupNames() {
-		return Collections3.extractToString(groupList, "name", ", ");
+	public String getRoleNames() {
+		return Collections3.extractToString(roles, "name", ", ");
 	}
 
 	@Override

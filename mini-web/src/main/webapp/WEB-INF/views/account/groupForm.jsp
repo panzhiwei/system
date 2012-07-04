@@ -24,7 +24,7 @@
 			</div>
 			<div>
 				<label for="permissionList" class="field">权限列表:</label>
-				<form:checkboxes path="permissionList" items="${allPermissions}" itemLabel="displayName" itemValue="value" />
+				<form:checkboxes path="permissions" items="${allPermissions}" itemLabel="name" itemValue="id" />
 			</div>	
 		</fieldset>
 		<div>

@@ -1,6 +1,6 @@
 package org.springside.examples.miniweb.dao.account;
 
-import org.springside.examples.miniweb.entity.account.Group;
+import org.springside.examples.miniweb.entity.account.Role;
 
 /**
  * 权限组对象的Dao interface.
@@ -8,5 +8,5 @@ import org.springside.examples.miniweb.entity.account.Group;
  * @author calvin
  */
 
-public interface GroupDao extends BaseDao<Group> {
+public interface RoleDao extends BaseDao<Role> {
 }

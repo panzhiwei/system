@@ -1,6 +1,7 @@
 package org.springside.examples.miniweb.service.account;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -14,8 +15,11 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springside.examples.miniweb.entity.account.Group;
+import org.springside.examples.miniweb.entity.account.Permission;
+import org.springside.examples.miniweb.entity.account.Role;
 import org.springside.examples.miniweb.entity.account.User;
+
+import com.google.common.collect.Sets;
 
 /**
  * 自实现用户与权限查询.
@@ -33,7 +37,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		User user = accountManager.findUserByLoginName(token.getUsername());
 		if (user != null) {
-			return new SimpleAuthenticationInfo(new ShiroUser(user.getLoginName(), user.getName()), user.getPassword(),
+			return new SimpleAuthenticationInfo(new ShiroUser(user.getLoginName(), user.getRealName()), user.getPassword(),
 					getName());
 		} else {
 			return null;
@@ -49,10 +53,12 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		User user = accountManager.findUserByLoginName(shiroUser.getLoginName());
 		if (user != null) {
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-			for (Group group : user.getGroupList()) {
-				//基于Permission的权限信息
-				info.addStringPermissions(group.getPermissionList());
+			Set<String> permissions=Sets.newHashSet();
+			for (Role role : user.getRoles()) {
+				for(Permission tmp:role.getPermissions())
+					permissions.add(tmp.getValue());
 			}
+			info.addStringPermissions(permissions);
 			return info;
 		} else {
 			return null;

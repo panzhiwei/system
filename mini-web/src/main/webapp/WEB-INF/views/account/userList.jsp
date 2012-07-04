@@ -23,12 +23,12 @@
 		<c:forEach items="${users}" var="user">
 			<tr>
 				<td>${user.loginName}</td>
-				<td>${user.name}</td>
+				<td>${user.realName}</td>
 				<td>${user.email}</td>
-				<td>${user.groupNames}</td>
+				<td>${user.roleNames}</td>
 				<td>
 					<shiro:hasPermission name="user:edit">
-	    				<a href="update/${user.id}" id="editLink-${user.name}">修改</a> <a href="delete/${user.id}">删除</a>
+	    				<a href="update/${user.id}" id="editLink-${user.realName}">修改</a> <a href="delete/${user.id}">删除</a>
 					</shiro:hasPermission>
 				</td>
 			</tr>
