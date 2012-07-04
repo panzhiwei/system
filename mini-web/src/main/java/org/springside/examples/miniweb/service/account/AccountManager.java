@@ -9,14 +9,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.examples.miniweb.dao.account.BaseDao;
+import org.springside.examples.miniweb.dao.account.PermissionDao;
+import org.springside.examples.miniweb.dao.account.RoleDao;
+import org.springside.examples.miniweb.dao.account.UserDao;
 import org.springside.examples.miniweb.entity.account.Permission;
 import org.springside.examples.miniweb.entity.account.QUser;
 import org.springside.examples.miniweb.entity.account.Role;
 import org.springside.examples.miniweb.entity.account.User;
 import org.springside.examples.miniweb.service.ServiceException;
+import org.springside.examples.miniweb.service.impl.BaseService;
 
 /**
  * 安全相关实体的管理类,包括用户和权限组.
@@ -24,26 +27,26 @@ import org.springside.examples.miniweb.service.ServiceException;
  * @author calvin
  */
 // Spring Bean的标识.
-@Component
+@Service
 // 默认将类中的所有public函数纳入事务管理.
 @Transactional(readOnly = true)
-public class AccountManager {
+public class AccountManager extends BaseService<User, UserDao>{
 
 	private static Logger logger = LoggerFactory.getLogger(AccountManager.class);
 
-	private BaseDao<User> userDao;
-	private BaseDao<Role> roleDao;
-	private BaseDao<Permission> permissionDao;
+	//private UserDao userDao;
+	private RoleDao roleDao;
+	private PermissionDao permissionDao;
 	private ShiroDbRealm shiroRealm;
 
 	// -- User Manager --//
 	public User getUser(String id) {
-		return userDao.findOne(id);
+		return findOne(id);
 	}
 
 	@Transactional(readOnly = false)
 	public void saveUser(User entity) {
-		userDao.save(entity);
+		save(entity);
 		shiroRealm.clearCachedAuthorizationInfo(entity.getLoginName());
 	}
 
@@ -56,7 +59,7 @@ public class AccountManager {
 			logger.warn("操作员{}尝试删除超级管理员用户", SecurityUtils.getSubject().getPrincipal());
 			throw new ServiceException("不能删除超级管理员用户");
 		}
-		userDao.delete(id);
+		delete(id);
 	}
 
 	/**
@@ -67,13 +70,13 @@ public class AccountManager {
 	}
 
 	public List<User> getAllUser() {
-		return (List<User>) userDao.findAll(new Sort(Direction.ASC, "id"));
+		return (List<User>) findAll(new Sort(Direction.ASC, "id"));
 	}
 
 	public User findUserByLoginName(String loginName) {
-		// return userDao.findByLoginName(loginName);
+		// return findByLoginName(loginName);
 		QUser user = QUser.user;
-		return userDao.findOne(user.loginName.eq(loginName));
+		return findOne(user.loginName.eq(loginName));
 	}
 
 	// -- Group Manager --//
@@ -96,7 +99,7 @@ public class AccountManager {
 
 		QUser user = QUser.user;
 		Role g = roleDao.findOne(id);
-		Iterable<User> users = userDao.findAll(user.roles.contains(g));
+		Iterable<User> users = findAll(user.roles.contains(g));
 		for (User u : users) {
 			u.getRoles().remove(g);
 		}
@@ -104,13 +107,13 @@ public class AccountManager {
 		shiroRealm.clearAllCachedAuthorizationInfo();
 	}
 
-	@Autowired
-	public void setUserDao(BaseDao<User> userDao) {
-		this.userDao = userDao;
-	}
+//	@Autowired
+//	public void setIUserDao(UserDao userDao) {
+//		this.userDao = userDao;
+//	}
 
 	@Autowired
-	public void setRoleDao(BaseDao<Role> roleDao) {
+	public void setIRoleDao(RoleDao roleDao) {
 		this.roleDao = roleDao;
 	}
 
@@ -124,7 +127,7 @@ public class AccountManager {
 	}
 
 	@Autowired
-	public void setPermissionDao(BaseDao<Permission> permissionDao) {
+	public void setIPermissionDao(PermissionDao permissionDao) {
 		this.permissionDao = permissionDao;
 	}
 
