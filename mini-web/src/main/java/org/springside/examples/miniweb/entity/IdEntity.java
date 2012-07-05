@@ -1,5 +1,7 @@
 package org.springside.examples.miniweb.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -16,8 +18,12 @@ import org.hibernate.annotations.GenericGenerator;
  */
 //JPA 基类的标识
 @MappedSuperclass
-public abstract class IdEntity {
+public abstract class IdEntity implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected String id;
 
 	@Id

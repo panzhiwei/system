@@ -42,6 +42,6 @@ public class PermissionListEditor extends PropertyEditorSupport {
 	 */
 	@Override
 	public String getAsText() {
-		return Collections3.extractToString((Set<Permission>) getValue(), "id", ",");
+		return Collections3.extractToString((Set<?>) getValue(), "id", ",");
 	}
 }

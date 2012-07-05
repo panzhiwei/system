@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.examples.miniweb.entity.account.Role;
-import org.springside.examples.miniweb.entity.account.Permission;
 import org.springside.examples.miniweb.service.account.AccountManager;
 
 @Controller

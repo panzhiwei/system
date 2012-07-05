@@ -1,7 +1,6 @@
 package org.springside.examples.miniweb.web.account;
 
 import java.beans.PropertyEditorSupport;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -43,6 +42,6 @@ public class GroupListEditor extends PropertyEditorSupport {
 	 */
 	@Override
 	public String getAsText() {
-		return Collections3.extractToString((Set<Role>) getValue(), "id", ",");
+		return Collections3.extractToString((Set<?>) getValue(), "id", ",");
 	}
 }

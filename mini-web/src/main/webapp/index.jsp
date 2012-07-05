@@ -26,9 +26,9 @@
 <script src="${ctx}/static/dwz/js/jquery.cookie.js" type="text/javascript"></script>
 <script src="${ctx}/static/dwz/js/jquery.validate.js" type="text/javascript"></script>
 <script src="${ctx}/static/dwz/js/jquery.bgiframe.js" type="text/javascript"></script>
-<script src="${ctx}/static/dwz/xheditor/xheditor-1.1.12-zh-cn.min.js" type="text/javascript"></script>
-<script src="${ctx}/static/dwz/uploadify/scripts/swfobject.js" type="text/javascript"></script>
-<script src="${ctx}/static/dwz/uploadify/scripts/jquery.uploadify.v2.1.0.js" type="text/javascript"></script>
+<script src="${ctx}/static/dwz/js/xheditor/xheditor-1.1.12-zh-cn.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/dwz/js/uploadify/scripts/swfobject.js" type="text/javascript"></script>
+<script src="${ctx}/static/dwz/js/uploadify/scripts/jquery.uploadify.v2.1.0.js" type="text/javascript"></script>
 
 <%-- <script src="${ctx}/static/dwz/js/dwz.core.js" type="text/javascript"></script>
 <script src="${ctx}/static/dwz/js/dwz.util.date.js" type="text/javascript"></script>
@@ -77,7 +77,7 @@ $(function(){
 		debug:false,	// 调试模式 【true|false】
 		callback:function(){
 			initEnv();
-			$("#themeList").theme({themeBase:"themes"}); // themeBase 相对于index页面的主题base路径
+			$("#themeList").theme({themeBase:"${ctx}/static/dwz/themes"}); // themeBase 相对于index页面的主题base路径
 		}
 	});
 });
@@ -90,22 +90,10 @@ $(function(){
 			<div class="headerNav">
 				<a class="logo" href="http://j-ui.com">标志</a>
 				<ul class="nav">
-					<li id="switchEnvBox"><a href="javascript:">（<span>北京</span>）切换城市</a>
-						<ul>
-							<li><a href="sidebar_1.html">北京</a></li>
-							<li><a href="sidebar_2.html">上海</a></li>
-							<li><a href="sidebar_2.html">南京</a></li>
-							<li><a href="sidebar_2.html">深圳</a></li>
-							<li><a href="sidebar_2.html">广州</a></li>
-							<li><a href="sidebar_2.html">天津</a></li>
-							<li><a href="sidebar_2.html">杭州</a></li>
-						</ul>
-					</li>
-					<li><a href="https://me.alipay.com/dwzteam" target="_blank">捐赠</a></li>
+					<shiro:user>
+					<li style="color:white">Hello, <shiro:principal property="loginName"/>!!</li>
+					</shiro:user>
 					<li><a href="changepwd.html" target="dialog" width="600">设置</a></li>
-					<li><a href="http://www.cnblogs.com/dwzjs" target="_blank">博客</a></li>
-					<li><a href="http://weibo.com/dwzui" target="_blank">微博</a></li>
-					<li><a href="http://bbs.dwzjs.com" target="_blank">论坛</a></li>
 					<li><a href="${ctx }/logout">退出</a></li>
 				</ul>
 				<ul class="themeList" id="themeList">
