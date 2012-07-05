@@ -8,7 +8,7 @@
 		<div>
 		<span class="subtitle">--CRUD管理界面演示</span>
 		<shiro:user>
-			<span class="right">Hello, <shiro:principal property="name"/>!!</span>
+			<span class="right">Hello, <shiro:principal property="realName"/>!!</span>
 		</shiro:user>
 		</div>
 	</div>

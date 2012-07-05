@@ -32,18 +32,17 @@ public class User extends IdEntity {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;	
-	
+	private static final long serialVersionUID = 1L;
+
 	private String loginName;
 	private String password;
 	private String realName;
 	private String email;
 	private boolean locked;
-	
-	private boolean passwordExpired;
-	
 
-	private Set<Role> roles =Sets.newLinkedHashSet();// 有序的关联对象集合
+	private boolean passwordExpired;
+
+	private transient Set<Role> roles = Sets.newLinkedHashSet();// 有序的关联对象集合
 
 	public String getLoginName() {
 		return loginName;
@@ -77,8 +76,7 @@ public class User extends IdEntity {
 		this.email = email;
 	}
 
-	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "T_B_USER_ROLE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
 	@OrderBy("id")
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -89,7 +87,7 @@ public class User extends IdEntity {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
+
 	public boolean isLocked() {
 		return locked;
 	}
@@ -117,6 +115,8 @@ public class User extends IdEntity {
 
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return new ToStringBuilder(this).append("loginName",this.loginName).append("realName",this.realName).append("email",this.email)
+				.append("locked",this.locked).toString();
 	}
+	
 }

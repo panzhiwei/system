@@ -31,7 +31,7 @@ public class Permission extends IdEntity {
 	private String value;
 	private String name;
 	
-	private Set<Role> roles=Sets.newLinkedHashSet();
+	private transient Set<Role> roles=Sets.newLinkedHashSet();
 
 	@Column(nullable=false,unique=true,length=50, columnDefinition="VARCHAR(50)")
 	public String getValue() {

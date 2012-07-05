@@ -40,9 +40,9 @@ public class Role extends IdEntity {
 	
 	//private String value;
 
-	private Set<Permission> permissions = Sets.newLinkedHashSet();
+	private transient Set<Permission> permissions = Sets.newLinkedHashSet();
 	
-	private Set<User> users=Sets.newLinkedHashSet();
+	private transient Set<User> users=Sets.newLinkedHashSet();
 
 	public Role() {
 	}

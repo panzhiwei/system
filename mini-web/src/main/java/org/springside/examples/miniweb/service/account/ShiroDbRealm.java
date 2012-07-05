@@ -37,7 +37,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		User user = accountManager.findUserByLoginName(token.getUsername());
 		if (user != null) {
-			return new SimpleAuthenticationInfo(new ShiroUser(user.getLoginName(), user.getRealName()), user.getPassword(),
+			return new SimpleAuthenticationInfo(user, user.getPassword(),
 					getName());
 		} else {
 			return null;
@@ -49,7 +49,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		ShiroUser shiroUser = (ShiroUser) principals.fromRealm(getName()).iterator().next();
+		User shiroUser = (User) principals.fromRealm(getName()).iterator().next();
 		User user = accountManager.findUserByLoginName(shiroUser.getLoginName());
 		if (user != null) {
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

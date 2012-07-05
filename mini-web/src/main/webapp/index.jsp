@@ -2,6 +2,7 @@
 <%@ page import="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"%>
 <%@ page import="org.apache.shiro.authc.ExcessiveAttemptsException"%>
 <%@ page import="org.apache.shiro.authc.IncorrectCredentialsException"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -91,7 +92,7 @@ $(function(){
 				<a class="logo" href="http://j-ui.com">标志</a>
 				<ul class="nav">
 					<shiro:user>
-					<li style="color:white">Hello, <shiro:principal property="loginName"/>!!</li>
+					<li style="color:white">您好, <shiro:principal property="realName" /></li>
 					</shiro:user>
 					<li><a href="changepwd.html" target="dialog" width="600">设置</a></li>
 					<li><a href="${ctx }/logout">退出</a></li>
@@ -121,13 +122,13 @@ $(function(){
 
 				<div class="accordion" fillSpace="sidebar">
 					<div class="accordionHeader">
-						<h2><span>Folder</span>界面组件</h2>
+						<h2><span>Folder</span>基础信息管理</h2>
 					</div>
 					<div class="accordionContent">
 						<ul class="tree treeFolder">
-							<li><a href="tabsPage.html" target="navTab">主框架面板</a>
+							<li><a href="tabsPage.html" target="navTab">系统管理</a>
 								<ul>
-									<li><a href="main.jsp" target="navTab" rel="main">我的主页</a></li>
+									<li><a href="${ctx }/account/user" target="navTab" rel="main1">用户管理</a></li>
 									<li><a href="http://www.baidu.com" target="navTab" rel="page1">页面一(外部页面)</a></li>
 									<li><a href="demo_page2.html" target="navTab" rel="external" external="true">iframe navTab页面</a></li>
 									<li><a href="demo_page1.html" target="navTab" rel="page1" fresh="false">替换页面一</a></li>
@@ -242,14 +243,14 @@ $(function(){
 								<h2><a href="doc/dwz-user-guide.pdf" target="_blank">DWZ框架使用手册(PDF)</a></h2>
 								<a href="doc/dwz-user-guide.swf" target="_blank">DWZ框架演示视频</a>
 							</div>
-							<div class="right">
+							<div class="">
 								<p><a href="doc/dwz-user-guide.zip" target="_blank" style="line-height:19px">DWZ框架使用手册(CHM)</a></p>
 								<p><a href="doc/dwz-ajax-develop.swf" target="_blank" style="line-height:19px">DWZ框架Ajax开发视频教材</a></p>
 							</div>
 							<p><span>DWZ富客户端框架</span></p>
 							<p>DWZ官方微博:<a href="http://weibo.com/dwzui" target="_blank">http://weibo.com/dwzui</a></p>
 						</div>
-						<div class="pageFormContent" layoutH="80" style="margin-right:230px">
+						<div class="pageFormContent" layoutH="80" >
 							
 							<p style="color:red">DWZ官方微博 <a href="http://weibo.com/dwzui" target="_blank">http://weibo.com/dwzui</a></p>
 							<p style="color:red">DWZ官方微群 <a href="http://q.weibo.com/587328/invitation=11TGXSt-148c2" target="_blank">http://q.weibo.com/587328/invitation=11TGXSt-148c2</a></p>
@@ -282,12 +283,12 @@ Error loading XML document: dwz.frag.xml
 合作电话：010-52897073
 邮箱：support@dwzjs.com
 </pre>
-						</div>
+						<!-- </div>
 						
 						<div style="width:230px;position: absolute;top:60px;right:0" layoutH="80">
 							<iframe width="100%" height="430" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?width=0&height=430&fansRow=2&ptype=1&skin=1&isTitle=0&noborder=1&isWeibo=1&isFans=0&uid=1739071261&verifier=c683dfe7"></iframe>
 						</div>
-					</div>
+					</div> -->
 					
 				</div>
 			</div>
@@ -297,18 +298,6 @@ Error loading XML document: dwz.frag.xml
 
 	<div id="footer">Copyright &copy; 2010 <a href="demo_page2.html" target="dialog">DWZ团队</a> Tel：010-52897073</div>
 
-<!-- 注意此处js代码用于google站点统计，非DWZ代码，请删除 -->
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-16716654-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? ' https://ssl' : ' http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
 
 </body>
 </html>
