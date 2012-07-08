@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 import org.springside.examples.miniweb.dao.account.BaseDao;
 import org.springside.examples.miniweb.entity.IdEntity;
 import org.springside.examples.miniweb.service.IBaseService;
@@ -14,9 +15,9 @@ import org.springside.examples.miniweb.service.IBaseService;
 import com.mysema.query.types.OrderSpecifier;
 import com.mysema.query.types.Predicate;
 
-public abstract class BaseService<T extends IdEntity,D extends BaseDao<T>> implements IBaseService<T>{
-	
-	
+@Transactional(readOnly = true)
+public abstract class BaseService<T extends IdEntity, D extends BaseDao<T>> implements IBaseService<T> {
+
 	private D baseDao;
 
 	public D getBaseDao() {
@@ -29,6 +30,7 @@ public abstract class BaseService<T extends IdEntity,D extends BaseDao<T>> imple
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public T save(T entity) {
 		return baseDao.save(entity);
 	}
@@ -84,6 +86,7 @@ public abstract class BaseService<T extends IdEntity,D extends BaseDao<T>> imple
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public List<T> save(Iterable<? extends T> entities) {
 		return baseDao.save(entities);
 	}
@@ -99,6 +102,7 @@ public abstract class BaseService<T extends IdEntity,D extends BaseDao<T>> imple
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void flush() {
 		baseDao.flush();
 	}
@@ -109,6 +113,7 @@ public abstract class BaseService<T extends IdEntity,D extends BaseDao<T>> imple
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public T saveAndFlush(T entity) {
 		return baseDao.saveAndFlush(entity);
 	}
@@ -119,6 +124,7 @@ public abstract class BaseService<T extends IdEntity,D extends BaseDao<T>> imple
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void deleteInBatch(Iterable<T> entities) {
 		baseDao.deleteInBatch(entities);
 	}
@@ -134,24 +140,35 @@ public abstract class BaseService<T extends IdEntity,D extends BaseDao<T>> imple
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void delete(String id) {
 		baseDao.delete(id);
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void delete(T entity) {
 		baseDao.delete(entity);
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void delete(Iterable<? extends T> entities) {
 		baseDao.delete(entities);
 	}
 
 	@Override
+	@Transactional(readOnly = false)
 	public void deleteAll() {
 		baseDao.deleteAll();
 	}
-	
-	
+
+	@Override
+	@Transactional(readOnly = false)
+	public void delete(String[] ids) {
+		for (String id : ids)
+			baseDao.delete(id);
+
+	}
+
 }

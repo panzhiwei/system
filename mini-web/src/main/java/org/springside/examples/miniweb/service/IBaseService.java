@@ -61,4 +61,6 @@ public interface IBaseService<T extends IdEntity> {
 	public void delete(Iterable<? extends T> entities);
 
 	public void deleteAll();
+	
+	public void delete(String[] ids);
 }

@@ -105,6 +105,20 @@
 			<scope>runtime</scope>
 		</dependency>
 		<!-- PERSISTENCE end -->
+		
+		<!-- JSON begin -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-jaxrs</artifactId>
+			<version>1.9.7</version>
+		</dependency>
+		
+		<!-- JSON end -->
 
 		<!-- WEB begin -->
 		<dependency>

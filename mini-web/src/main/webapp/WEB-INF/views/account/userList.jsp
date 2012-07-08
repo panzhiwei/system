@@ -92,10 +92,10 @@
 				<option value="100">100</option>
 				<option value="200">200</option>
 			</select>
-			<span>条，共${totalCount}条</span>
+			<span>条，共${totalElements}条</span>
 		</div>
 		
-		<div class="pagination" targetType="navTab" totalCount="200" numPerPage="20" pageNumShown="10" currentPage="1"></div>
+		<div class="pagination" targetType="navTab" totalCount="${totalElements}" numPerPage="${size }" pageNumShown="10" currentPage="${ number}"></div>
 
 	</div>
 </div>

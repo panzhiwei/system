@@ -39,13 +39,13 @@ public class GroupDetailController {
 
 	@RequiresPermissions("group:edit")
 	@RequestMapping(value = "save/{id}")
-	public String save(@ModelAttribute("group") Role group, RedirectAttributes redirectAttributes) {
-		accountManager.saveGroup(group);
-		redirectAttributes.addFlashAttribute("message", "修改权限组" + group.getName() + "成功");
+	public String save(@ModelAttribute("role") Role role, RedirectAttributes redirectAttributes) {
+		accountManager.saveGroup(role);
+		redirectAttributes.addFlashAttribute("message", "修改权限组" + role.getName() + "成功");
 		return "redirect:/account/group/";
 	}
 
-	@ModelAttribute("group")
+	@ModelAttribute("role")
 	public Role getGroup(@PathVariable("id") String id) {
 		return accountManager.getGroup(id);
 	}
