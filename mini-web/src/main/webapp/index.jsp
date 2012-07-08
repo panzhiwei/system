@@ -128,8 +128,9 @@ $(function(){
 					<div class="accordionContent">
 						<ul class="tree treeFolder">
 							
-							<li><a href="${ctx }/account/user?navTabId=main1" target="navTab" rel="main1">用户管理</a></li>
-							<li><a href="${ctx }/account/permission?navTabId=main2" target="navTab" rel="main2">权限管理</a></li>
+							<li><a href="${ctx }/account/user?navTabId=user" target="navTab" rel="user">用户管理</a></li>
+							<li><a href="${ctx }/account/role?navTabId=role" target="navTab" rel="role">角色管理</a></li>
+							<li><a href="${ctx }/account/permission?navTabId=permission" target="navTab" rel="permission">权限管理</a></li>
 									
 							
 						</ul>

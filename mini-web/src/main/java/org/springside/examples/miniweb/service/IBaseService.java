@@ -63,4 +63,6 @@ public interface IBaseService<T extends IdEntity> {
 	public void deleteAll();
 	
 	public void delete(String[] ids);
+	
+	public T createEntity();
 }

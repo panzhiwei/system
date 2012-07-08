@@ -8,12 +8,12 @@
 		overflowToDisk="true" maxEntriesLocalDisk="100000" />
 
 	<!-- Special objects setting. -->
-	<cache name="org.springside.examples.miniweb.entity.account.User" maxEntriesLocalHeap="1000" eternal="true"
+	<!-- <cache name="org.springside.examples.miniweb.entity.account.User" maxEntriesLocalHeap="1000" eternal="true"
 		overflowToDisk="true" maxEntriesLocalDisk="10000" />
 	<cache name="org.springside.examples.miniweb.entity.account.User.groupList" maxEntriesLocalHeap="1000" eternal="true"
 		overflowToDisk="true" maxEntriesLocalDisk="10000" />
 	<cache name="org.springside.examples.miniweb.entity.account.Group" maxEntriesLocalHeap="100" eternal="true"
 		overflowToDisk="true" maxEntriesLocalDisk="1000" />
 	<cache name="org.springside.examples.miniweb.entity.account.Group.permissionList" maxEntriesLocalHeap="100"
-		eternal="true" overflowToDisk="true" maxEntriesLocalDisk="1000" />
+		eternal="true" overflowToDisk="true" maxEntriesLocalDisk="1000" /> -->
 </ehcache>

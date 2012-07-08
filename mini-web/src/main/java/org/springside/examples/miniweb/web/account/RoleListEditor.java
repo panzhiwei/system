@@ -7,21 +7,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springside.examples.miniweb.entity.account.Role;
-import org.springside.examples.miniweb.service.account.AccountManager;
+import org.springside.examples.miniweb.service.IRoleService;
 import org.springside.modules.utils.Collections3;
 
 import com.google.common.collect.Sets;
 
-/**
- * 用于转换用户表单中复杂对象Group的checkbox的关联。
- * 
- * @author calvin
- */
 @Component
-public class GroupListEditor extends PropertyEditorSupport {
+public class RoleListEditor extends PropertyEditorSupport {
 
 	@Autowired
-	private AccountManager accountManager;
+	private IRoleService rolsService;
 
 	/**
 	 * Back From Page
@@ -31,7 +26,7 @@ public class GroupListEditor extends PropertyEditorSupport {
 		String[] ids = StringUtils.split(text, ",");
 		Set<Role> groups = Sets.newHashSet();
 		for (String id : ids) {
-			Role group = accountManager.getGroup(String.valueOf(id));
+			Role group = rolsService.findOne(id);
 			groups.add(group);
 		}
 		setValue(groups);

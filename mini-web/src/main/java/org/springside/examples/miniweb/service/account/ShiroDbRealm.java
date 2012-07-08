@@ -1,6 +1,5 @@
 package org.springside.examples.miniweb.service.account;
 
-import java.io.Serializable;
 import java.util.Set;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -15,19 +14,21 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springside.examples.miniweb.entity.account.Permission;
 import org.springside.examples.miniweb.entity.account.Role;
 import org.springside.examples.miniweb.entity.account.User;
+import org.springside.examples.miniweb.service.IUserService;
 
 import com.google.common.collect.Sets;
 
 /**
- * 自实现用户与权限查询.
- * 演示关系，密码用明文存储，因此使用默认 的SimpleCredentialsMatcher.
+ * 自实现用户与权限查询. 演示关系，密码用明文存储，因此使用默认 的SimpleCredentialsMatcher.
  */
+@Component
 public class ShiroDbRealm extends AuthorizingRealm {
 
-	private AccountManager accountManager;
+	private IUserService userService;
 
 	/**
 	 * 认证回调函数, 登录时调用.
@@ -35,10 +36,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-		User user = accountManager.findUserByLoginName(token.getUsername());
+		User user = userService.findUserByLoginName(token.getUsername());
 		if (user != null) {
-			return new SimpleAuthenticationInfo(user, user.getPassword(),
-					getName());
+			return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
 		} else {
 			return null;
 		}
@@ -50,12 +50,12 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		User shiroUser = (User) principals.fromRealm(getName()).iterator().next();
-		User user = accountManager.findUserByLoginName(shiroUser.getLoginName());
+		User user = userService.findUserByLoginName(shiroUser.getLoginName());
 		if (user != null) {
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-			Set<String> permissions=Sets.newHashSet();
+			Set<String> permissions = Sets.newHashSet();
 			for (Role role : user.getRoles()) {
-				for(Permission tmp:role.getPermissions())
+				for (Permission tmp : role.getPermissions())
 					permissions.add(tmp.getValue());
 			}
 			info.addStringPermissions(permissions);
@@ -86,38 +86,8 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	}
 
 	@Autowired
-	public void setAccountManager(AccountManager accountManager) {
-		this.accountManager = accountManager;
+	public void setUserService(IUserService userService) {
+		this.userService = userService;
 	}
 
-	/**
-	 * 自定义Authentication对象，使得Subject除了携带用户的登录名外还可以携带更多信息.
-	 */
-	public static class ShiroUser implements Serializable {
-
-		private static final long serialVersionUID = -1748602382963711884L;
-		private String loginName;
-		private String name;
-
-		public ShiroUser(String loginName, String name) {
-			this.loginName = loginName;
-			this.name = name;
-		}
-
-		public String getLoginName() {
-			return loginName;
-		}
-
-		/**
-		 * 本函数输出将作为默认的<shiro:principal/>输出.
-		 */
-		@Override
-		public String toString() {
-			return loginName;
-		}
-
-		public String getName() {
-			return name;
-		}
-	}
 }
