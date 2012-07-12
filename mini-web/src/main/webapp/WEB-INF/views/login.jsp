@@ -1,47 +1,35 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"%>
-<%@ page import="org.apache.shiro.authc.ExcessiveAttemptsException"%>
-<%@ page import="org.apache.shiro.authc.IncorrectCredentialsException"%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<%@ include file="/include/tags.jsp"%>
 <html>
 <head>
-	<title>登录页</title>
-	<script>
-		$(document).ready(function() {
-			$("#loginForm").validate();
-		});
-	</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>系统管理平台</title>
+<link href="${ctx}/static/dwz/themes/default/style.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="${ctx}/static/dwz/themes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="${ctx}/static/dwz/themes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
+<link href="${ctx}/static/dwz/js/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen"/>
+<!--[if IE]>
+<link href="${ctx}/static/dwz/themes/css/ieHack.css" rel="stylesheet" type="text/css" media="screen"/>
+<![endif]-->
 </head>
 
 <body>
-	<%
-	String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
-	if(error != null){
-	%>
-		<div class="error prepend-top">登录失败，请重试.</div>
-	<%
-	}
-	%>
-	<form:form id="loginForm"  action="${ctx}/login" method="post">
-		<fieldset class="prepend-top">
-			<legend>登录</legend>
-			<div>
-				<label for="username" class="field">名称:</label>
-				<input type="text" id="username" name="username" size="25" value="${username}" class="required"/>
+	<form method="post" action="${ctx }/login" class="pageForm" style="width:350px;margin:0 auto;">
+		<div class="pageFormContent" layoutH="58">
+			<div class="unit">
+				<label>用户名：</label>
+				<input type="text" name="username" size="30" class="required"/>
 			</div>
-			<div>
-				<label for="password" class="field">密码:</label>
-				<input type="password" id="password" name="password" size="25"  class="required"/>
+			<div class="unit">
+				<label>密码：</label>
+				<input type="password" name="password" size="30" class="required"/>
 			</div>
-		</fieldset>
-		<div>
-			<input type="checkbox" id="rememberMe" name="rememberMe"/> <label for="rememberMe">记住我</label>
-			<span style="padding-left:10px;"><input id="submit" class="button" type="submit" value="登录"/></span>
 		</div>
-			<div>(管理员<b>admin/admin</b>, 普通用户<b>user/user</b>)</div>
-	</form:form>
+		<div class="">
+			<button type="submit">登 录</button>
+			</ul>
+		</div>
+	</form>
+		
 </body>
 </html>

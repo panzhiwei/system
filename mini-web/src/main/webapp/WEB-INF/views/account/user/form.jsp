@@ -17,11 +17,11 @@
 		</p>
 		<p>
 			<form:label path="password" >密码:</form:label>
-			<form:input path="password" cssClass="required"/>
+			<form:password path="password" cssClass="required"/>
 		</p>
 		<p>
 			<label for="passwordConfirm">确认密码:</label>
-			<input type="text" id="passwordConfirm" name="passwordConfirm" cssClass="required" equalTo="#password">
+			<input type="password" id="passwordConfirm" name="passwordConfirm" cssClass="required" equalTo="#password">
 		</p>
 		<p>
 			<form:label path="email" >邮箱:</form:label>

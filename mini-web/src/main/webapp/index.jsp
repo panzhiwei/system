@@ -139,7 +139,7 @@ $(function(){
 						<h2><span>Folder</span>工程管理</h2>
 					</div>
 					<div class="accordionContent">
-						<ul class="tree treeFolder">
+						<ul class="tree treeFolder">						
 							<li><a href="blank.jsp" target="navTab" rel="demo_page1">工程信息管理</a></li>
 							<li><a href="blank.jsp" target="navTab" rel="demo_page2">静载数据监控</a></li>
 							<li><a href="blank.jsp" target="navTab" rel="demo_page4">静载历史数据</a></li>
@@ -147,6 +147,7 @@ $(function(){
 							<li><a href="blank.jsp" target="navTab" rel="demo_page5">未知数据管理</a></li>
 							<li><a href="blank.jsp" target="navTab" rel="demo_page5">在线测试设备</a></li>
 						</ul>
+						
 					</div>
 					<div class="accordionHeader">
 						<h2><span>Folder</span>人员管理</h2>
@@ -210,16 +211,17 @@ $(function(){
 					<div class="page unitBox">
 						<div class="accountInfo">
 							
-							<p><span>DWZ富客户端框架</span></p>
-							<p>DWZ官方微博:<a href="http://weibo.com/dwzui" target="_blank">http://weibo.com/dwzui</a></p>
+							<p><span>待办事项：XXXX</span></p>
+							<p>&nbsp;BTEST&nbsp;<a href="#" >http://www.best.com.cn</a></p>
 						</div>
 						
 			</div>
 		</div>
 
 	</div>
-
-	<div id="footer">Copyright &copy; 2010 <a href="demo_page2.html" target="dialog">DWZ团队</a> Tel：010-52897073</div>
+	</div>
+</div>
+	<div id="footer">Copyright &copy; 2010 BEST团队 Tel：027-88888888</div>
 
 
 </body>

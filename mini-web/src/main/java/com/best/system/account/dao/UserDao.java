@@ -7,7 +7,7 @@ import com.best.system.base.dao.BaseDao;
 /**
  * 用户对象的Dao interface.
  * 
- * @author calvin
+ * @author pzw
  */
 public interface UserDao extends BaseDao<User> {
 

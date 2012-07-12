@@ -7,7 +7,7 @@ import com.best.system.base.dao.BaseDao;
 /**
  * 权限组对象的Dao interface.
  * 
- * @author calvin
+ * @author pzw
  */
 
 public interface RoleDao extends BaseDao<Role> {
